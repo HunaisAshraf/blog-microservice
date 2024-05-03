@@ -8,7 +8,7 @@ dotenv.config();
 connect();
 app.use(express.json());
 
-app.use("/api/post",router);
+app.use(router);
 
 const port = process.env.PORT || 3002;
 
