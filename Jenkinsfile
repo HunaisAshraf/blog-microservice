@@ -20,7 +20,7 @@ def dockerBuildAndPush(servicename){
     dir(servicename){
         sh "docker build -t hunais/${servicename}:latest ."
 
-        withCredentials([usernamePassword(credentialsId:'hunais',passwordVariable:'DOCKER_PASSWORD',usernameVariable:'DOCKER_USERNAME')]){
+        withCredentials([usernamePassword(credentialsId:'hunaisdocker',passwordVariable:'DOCKER_PASSWORD',usernameVariable:'DOCKER_USERNAME')]){
             sh "docker login -u ${DOCKER_USERNAME} -P ${DOCKER_PASSWORD}"
             sh "docker push hunais/${servicename}:latest"
         }
