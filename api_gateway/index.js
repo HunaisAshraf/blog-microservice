@@ -6,21 +6,21 @@ app.use(cors());
 app.use(
   "/api/auth",
   createProxyMiddleware({
-    target: "http://localhost:3001",
+    target: "http://auth:3001",
     changeOrigin: true,
   })
 );
 app.use(
   "/api/posts",
   createProxyMiddleware({
-    target: "http://localhost:3002",
+    target: "http://posts:3002",
     changeOrigin: true,
   })
 );
 app.use(
   "/api/comments",
   createProxyMiddleware({
-    target: "http://localhost:3003",
+    target: "http://comments:3003",
     changeOrigin: true,
   })
 );
