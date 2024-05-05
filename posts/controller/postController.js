@@ -1,4 +1,4 @@
-const produce = require("../../auth/kafka/producer");
+const produce = require("../kafka/producer");
 const PostModel = require("../models/postModel");
 const UserModel = require("../models/userModel");
 const CommentsModel = require("../models/commentsModel");
