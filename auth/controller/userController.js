@@ -12,7 +12,7 @@ const addUser = async (req, res) => {
     });
     await user.save();
 
-    await produce("add-user", req.body);
+    await produce("add-user", JSON.stringify(req.body));
 
     return res.json({
       success: true,
