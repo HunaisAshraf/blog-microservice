@@ -1,4 +1,5 @@
 const CommentsModel = require("../models/commentsModel");
+const produce = require("../kafka/producer");
 
 const addComment = async (req, res) => {
   try {
@@ -10,7 +11,7 @@ const addComment = async (req, res) => {
       comment,
     });
     await newComment.save();
-
+    await produce("add-comment", req.body);
     return res.json({
       success: true,
       message: "comment added successfully",

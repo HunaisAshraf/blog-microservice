@@ -1,3 +1,4 @@
+const produce = require("../kafka/producer");
 const UserModel = require("../models/userModel");
 
 const addUser = async (req, res) => {
@@ -10,6 +11,8 @@ const addUser = async (req, res) => {
       password,
     });
     await user.save();
+
+    await produce("add-user", req.body);
 
     return res.json({
       success: true,

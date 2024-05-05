@@ -1,4 +1,7 @@
+const produce = require("../../auth/kafka/producer");
 const PostModel = require("../models/postModel");
+const UserModel = require("../models/userModel");
+const CommentsModel = require("../models/commentsModel");
 
 const addPost = async (req, res) => {
   try {
@@ -9,6 +12,8 @@ const addPost = async (req, res) => {
       post,
     });
     await newPost.save();
+
+    await produce("add-post", req.body);
 
     return res.json({
       success: true,
@@ -33,7 +38,28 @@ const getPost = async (req, res) => {
   }
 };
 
+const addUser = async (user) => {
+  try {
+    const newUser = new UserModel(user);
+    await newUser.save();
+    console.log("new user added in comment");
+  } catch (error) {
+    console.log(error);
+  }
+};
+const addComment = async (comment) => {
+  try {
+    const newComment = new CommentsModel(comment);
+    await newComment.save();
+    console.log("new comment added in comment");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   addPost,
   getPost,
+  addUser,
+  addComment,
 };
