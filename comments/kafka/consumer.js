@@ -1,3 +1,4 @@
+const { addPost, addUser } = require("../controller/commentController");
 const kafka = require("./kafkaConfig");
 
 async function consume() {
@@ -5,15 +6,17 @@ async function consume() {
     const consumer = kafka.consumer({groupId:"comments-group"});
     await consumer.connect();
     await consumer.subscribe({
-      topics: ["add-user"],
+      topics: ["add-user","add-post"],
       fromBeginning: true,
     });
 
     await consumer.run({
-      eachMessage: async (topic, partition, message) => {
-        console.log(message.value);
+      eachMessage: async ({topic, partition, message}) => {
+        const value = JSON.parse(message.value.toString());
         if (topic === "add-user") {
-          // addUser()
+          addUser(value);
+        }else if(topic === "add-post"){
+          addPost(value)
         }
       },
     });
